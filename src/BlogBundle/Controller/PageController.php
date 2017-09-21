@@ -5,6 +5,9 @@ namespace BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use BlogBundle\Entity\Enquiry;
+use BlogBundle\Form\EnquiryType;
 
 class PageController extends Controller
 {
@@ -25,8 +28,26 @@ class PageController extends Controller
     /**
      * @Route("/contact", name="contact")
      */
-    public function contactAction()
-    {
-        return $this->render('BlogBundle:Page:contact.html.twig');
-    }
+	public function contactAction(Request $request)
+	{
+	    $enquiry = new Enquiry();
+
+	    $form = $this->createForm(EnquiryType::class, $enquiry);
+
+	    if ($request->isMethod($request::METHOD_POST)) {
+	      $form->handleRequest($request);
+
+	        if ($form->isValid()) {
+	            // Perform some action, such as sending an email
+
+	            // Redirect - This is important to prevent users re-posting
+	            // the form if they refresh the page
+	            return $this->redirect($this->generateUrl('contact'));
+	        }
+	    }
+
+	    return $this->render('BlogBundle:Page:contact.html.twig', array(
+	        'form' => $form->createView()
+	    ));
+	}
 }
