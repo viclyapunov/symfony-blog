@@ -2,6 +2,8 @@
     "name": "vagrant/symfony-blog",
     "license": "proprietary",
     "type": "project",
+    "minimum-stability": "alpha",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle",
@@ -22,6 +24,7 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "doctrine/data-fixtures": "^1.2",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-fixtures-bundle": "^2.4",
         "doctrine/orm": "^2.5",
